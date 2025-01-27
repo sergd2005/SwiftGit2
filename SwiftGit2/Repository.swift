@@ -8,6 +8,7 @@
 
 import Foundation
 import Clibgit2
+import libgit2_extensions
 
 public typealias CheckoutProgressBlock = (String?, Int, Int) -> Void
 
@@ -338,6 +339,10 @@ public final class Repository {
 		case let .tree(oid):
 			return tree(oid).map { $0 as ObjectType }
 		}
+	}
+	
+	public func merge() {
+		sample_git_merge(pointer)
 	}
 
 	// MARK: - Remote Lookups

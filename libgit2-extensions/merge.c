@@ -56,7 +56,7 @@ static void opts_add_refish(struct merge_options *opts, const char *refish)
 	assert(opts != NULL);
 
 	sz = ++opts->heads_count * sizeof(opts->heads[0]);
-	opts->heads = realloc((void *) opts->heads, sz);
+	opts->heads = xrealloc((void *) opts->heads, sz);
 	opts->heads[opts->heads_count - 1] = refish;
 }
 
@@ -272,6 +272,10 @@ static int create_merge_commit(git_repository *repo, git_index *index, struct me
 cleanup:
 	free(parents);
 	return err;
+}
+
+int sample_git_merge(git_repository *repo) {
+	return lg2_merge(repo, 0, NULL);
 }
 
 int lg2_merge(git_repository *repo, int argc, char **argv)
