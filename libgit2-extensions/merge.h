@@ -8,4 +8,4 @@
 
 #include "common.h"
 
-extern int sample_git_merge(git_repository *repo);
+extern int sample_git_merge(git_repository *repo, char **argv);

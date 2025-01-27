@@ -274,8 +274,8 @@ cleanup:
 	return err;
 }
 
-int sample_git_merge(git_repository *repo) {
-	return lg2_merge(repo, 0, NULL);
+int sample_git_merge(git_repository *repo, char **argv) {
+	return lg2_merge(repo, 2, argv);
 }
 
 int lg2_merge(git_repository *repo, int argc, char **argv)

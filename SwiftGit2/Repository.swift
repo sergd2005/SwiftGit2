@@ -341,8 +341,14 @@ public final class Repository {
 		}
 	}
 	
-	public func merge() {
-		sample_git_merge(pointer)
+	public func merge(commit: String) -> Int {
+		let commitBaseAddress = strdup(commit)
+		let emptyParam = strdup(" ")
+		var argv: [UnsafeMutablePointer<CChar>?] = [emptyParam, commitBaseAddress, nil]
+		let argvPointer = argv.withUnsafeMutableBufferPointer { ptr in
+			ptr.baseAddress!
+		}
+		return Int(sample_git_merge(pointer, argvPointer))
 	}
 
 	// MARK: - Remote Lookups
