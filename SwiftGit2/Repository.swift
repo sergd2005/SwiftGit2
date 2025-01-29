@@ -62,9 +62,23 @@ private func fetchOptions(credentials: Credentials) -> git_fetch_options {
 
 	pointer.deallocate()
 
-	options.callbacks.payload = credentials.toPointer()
+//	options.callbacks.payload = credentials.toPointer()
 	options.callbacks.credentials = credentialsCallback
 
+	return options
+}
+
+private func pushOptions() -> git_push_options {
+	let pointer = UnsafeMutablePointer<git_push_options>.allocate(capacity: 1)
+	git_push_init_options(pointer, UInt32(GIT_PUSH_OPTIONS_VERSION))
+	
+	var options = pointer.move()
+	
+	pointer.deallocate()
+	
+//	options.callbacks.payload = credentials.toPointer()
+	options.callbacks.credentials = credentialsCallback
+	
 	return options
 }
 
@@ -711,6 +725,11 @@ public final class Repository {
 				commit(tree: OID(treeOID), parents: [parentCommit], message: message, signature: signature)
 			}
 		}
+	}
+	
+	public func push() -> Int {
+		var pushOptions = pushOptions()
+		return Int(sample_git_push(pointer, &pushOptions))
 	}
 
 	// MARK: - Diffs

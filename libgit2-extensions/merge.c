@@ -293,7 +293,7 @@ int lg2_merge(git_repository *repo, int argc, char **argv)
 
 	state = git_repository_state(repo);
 	if (state != GIT_REPOSITORY_STATE_NONE) {
-		fprintf(stderr, "repository is in unexpected state %d\n", state);
+		fprintf(stderr, "repository is in state %d\n", state);
 		goto cleanup;
 	}
 
@@ -360,6 +360,9 @@ int lg2_merge(git_repository *repo, int argc, char **argv)
 cleanup:
 	free((char **)opts.heads);
 	free(opts.annotated);
-
+	if (state != GIT_REPOSITORY_STATE_NONE) {
+		return state;
+	}
+	
 	return 0;
 }
